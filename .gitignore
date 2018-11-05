@@ -21,10 +21,24 @@
 .bashrc
 .bash_profile
 
-# annoying cruft goes here
+## annoying cruft goes here
 .sudo_as_admin_successful
+.Xauthority
+.local/share/xorg
+# gtk stuff
+.config/dconf
+.local/share/recently-used.xbel
+# used by gnome-keyring chromium and others
+.pki
+.local/share/flatpak
+snap
+
 
 # PHP Composer
 .config/composer
 .local/bin/composer
 .local/share/composer
+
+# Visual Studio Code
+.config/Code
+.var
