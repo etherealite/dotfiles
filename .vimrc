@@ -119,84 +119,94 @@ if !has("compatible")
   map <silent> <F12> :set invlist<CR>
   " "}}}
 
+  " Environment
+  set directory=$XDG_CACHE_HOME/vim,~/,/tmp
+  set backupdir=$XDG_CACHE_HOME/vim,~/,/tmp
+  set viminfo+=n$XDG_CACHE_HOME/vim/viminfo
+  set runtimepath=$XDG_CONFIG_HOME/vim,$XDG_CONFIG_HOME/vim/after,$VIM,$VIMRUNTIME
+  " Changes location of the vim rc file
+  " to force vim to read it on startup you need to export a shell variable as follows
+  " export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc" | source $MYVIMRC'
+  " let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc"
 
-  " Specify a directory for plugins
-  " - For Neovim: ~/.local/share/nvim/plugged
-  " - Avoid using standard Vim directory names like 'plugin'
-  call plug#begin('~/.vim/plugged')
-
-
-  " project file tree
-  Plug 'scrooloose/nerdtree'
-
-  " visual yank register selection
-  Plug 'vim-scripts/YankRing.vim'
-
-  " easy buffer nav, swap lines
-  Plug 'tpope/vim-unimpaired'
-
-  " semantic auto-complete
-  Plug 'shougo/neocomplete.vim'
-
-  "  provides automatic closing of quotes, parenthesis, brackets, etc.
-  Plug 'raimondi/delimitmate'
-
-  " highlight the current tag pairs enclsosig cursor
-  Plug 'valloric/matchtagalways'
-
-  " fuzzy search files buffers and tags
-  Plug 'kien/ctrlp.vim'
-
-  " colors
-  Plug 'altercation/vim-colors-solarized'
-  "not using atm
-  "colorscheme solarized
-
-  " Adds operator to comment vim objects
-  Plug 'tpope/vim-commentary'
-
-  " super awesome motion
-  Plug 'Lokaltog/vim-easymotion'
-
-  " new motions for words sperated by Camel and snake case
-  Plug 'vim-scripts/camelcasemotion'
-
-  " auto align text 
-  Plug 'godlygeek/tabular'
-
-  " allow % motion to match words and regex
-  Plug 'vim-scripts/matchit.zip'
-
-  " allow supporting plugins to work with .
-  Plug 'tpope/vim-repeat'
-
-  " like EMAC's Helm
-  Plug 'Shougo/unite.vim'
-
-  " Instant feed back for string search
-  Plug 'pelodelfuego/vim-swoop'
-
-  " visual indentation levels
-  Plug 'nathanaelkane/vim-indent-guides'
-  let g:indent_guides_guide_size = 1
-  " allow saving files as root user
-  Plug 'vim-scripts/sudo.vim'
-
-  " syntax highling for ansible playbooks
-  Plug 'pearofducks/ansible-vim'
-
-  " respect setting in .editorconfig files
-  Plug 'editorconfig/editorconfig-vim'
+  if exists("*plug#begin")
+    " Specify a directory for plugins
+    " - For Neovim: ~/.local/share/nvim/plugged
+    " - Avoid using standard Vim directory names like 'plugin'
+    call plug#begin('~/.vim/plugged')
 
 
-  " initialize plugin system
-  call plug#end()
+    " project file tree
+    Plug 'scrooloose/nerdtree'
 
-  filetype plugin indent on    " required
-  " to ignore plugin indent changes, instead use:
-  "filetype plugin on
+    " visual yank register selection
+    Plug 'vim-scripts/YankRing.vim'
 
-  " plugin setup stuff
-  let g:neocomplcache_enable_at_startup = 1
+    " easy buffer nav, swap lines
+    Plug 'tpope/vim-unimpaired'
 
+    " semantic auto-complete
+    Plug 'shougo/neocomplete.vim'
+
+    "  provides automatic closing of quotes, parenthesis, brackets, etc.
+    Plug 'raimondi/delimitmate'
+
+    " highlight the current tag pairs enclsosig cursor
+    Plug 'valloric/matchtagalways'
+
+    " fuzzy search files buffers and tags
+    Plug 'kien/ctrlp.vim'
+
+    " colors
+    Plug 'altercation/vim-colors-solarized'
+    "not using atm
+    "colorscheme solarized
+
+    " Adds operator to comment vim objects
+    Plug 'tpope/vim-commentary'
+
+    " super awesome motion
+    Plug 'Lokaltog/vim-easymotion'
+
+    " new motions for words sperated by Camel and snake case
+    Plug 'vim-scripts/camelcasemotion'
+
+    " auto align text 
+    Plug 'godlygeek/tabular'
+
+    " allow % motion to match words and regex
+    Plug 'vim-scripts/matchit.zip'
+
+    " allow supporting plugins to work with .
+    Plug 'tpope/vim-repeat'
+
+    " like EMAC's Helm
+    Plug 'Shougo/unite.vim'
+
+    " Instant feed back for string search
+    Plug 'pelodelfuego/vim-swoop'
+
+    " visual indentation levels
+    Plug 'nathanaelkane/vim-indent-guides'
+    let g:indent_guides_guide_size = 1
+    " allow saving files as root user
+    Plug 'vim-scripts/sudo.vim'
+
+    " syntax highling for ansible playbooks
+    Plug 'pearofducks/ansible-vim'
+
+    " respect setting in .editorconfig files
+    Plug 'editorconfig/editorconfig-vim'
+
+
+    " initialize plugin system
+    call plug#end()
+
+    filetype plugin indent on    " required
+    " to ignore plugin indent changes, instead use:
+    "filetype plugin on
+
+    " plugin setup stuff
+    let g:neocomplcache_enable_at_startup = 1
+  endif
 endif
