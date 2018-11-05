@@ -1,0 +1,4 @@
+# Init file for GNU Readline
+
+# turn off the bell sound and flash instead
+set bell-style none

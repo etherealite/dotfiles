@@ -1,0 +1,9 @@
+[user]
+	email = seclayer@gmail.com
+	name = etherealite
+[core]
+	el = lf
+	autocrlf = input
+	safecrlf = true
+[push]
+	default = simple

@@ -1,0 +1,58 @@
+# Programs that respect these environment variables will place their 
+# dotfiles in a folder to keep them from missing up your home directory.
+
+
+# XDG directories
+export XDG_CONFIG_HOME=$HOME/.config
+export XDG_DATA_HOME=$HOME/.local/share
+export XDG_BIN_HOME=$HOME/.local/bin
+export XDG_LIB_HOME=$HOME/.local/lib
+export XDG_CACHE_HOME=$HOME/.cache
+
+export PATH="$XDG_BIN_HOME:$PATH"
+
+# XDG compliancy fixes
+# see more from `github.com/grawity/dotfiles/blob/master/.dotfiles.notes`
+export GEM_PATH="$HOME/.local/bin"
+export GEMRC="$XDG_CONFIG_HOME/gemrc"
+#export GIT_SSH_COMMAND="ssh -F $XDG_CONFIG_HOME/ssh/config "$@" 2>/dev/null"
+export GNUPGHOME="$XDG_CONFIG_HOME/gnupg"
+export GTK2_RC_FILES="$XDG_CONFIG_HOME/gtk-2.0/gtkrc"
+export HOMERC="$XDG_CONFIG_HOME/htoprc"
+export INPUTRC="$XDG_CONFIG_HOME/inputrc"
+export IPYTHONDIR="$XDG_CONFIG_HOME/ipython"
+export KDEDIR="$XDG_CONFIG_HOME/kde"
+export KDEHOME="$XDG_CONFIG_HOME/kde"
+export LESSHISTFILE="$XDG_DATA_HOME/less/history"
+export MYSQL_HISTFILE="$XDG_DATA_HOME/mysql_history"
+export MYSQL_HOME="$XDG_CONFIG_HOME/my.cnf"
+export npm_config_userconfig="$XDG_CONFIG_HOME/npm/npmrc"
+export PIP_CONFIG_FILE="$XDG_CONFIG_HOME/pip/pip.conf"
+export PIP_LOG_FILE="$XDG_DATA_HOME/pip/log"
+export PSQLRC="$XDG_CONFIG_HOME/psql/psqlrc"
+export PSQL_HISTORY="$XDG_DATA_HOME/psql/history"
+export TERMINFO="$XDG_CONFIG_HOME/terminfo"
+#export VIMINIT='let $MYVIMRC="$XDG_CONFIG_HOME/vim/vimrc" | source $MYVIMRC'
+export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority"
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+export HISTFILE="$XDG_DATA_HOME/bash_history"
+export ZGEN_DIR="$XDG_DATA_HOME/zgen"
+
+# Alias respecting programs
+alias ncmpcpp="ncmpcpp -c $XDG_CONFIG_HOME/ncmpcpp/config"
+#alias scp="scp -F $XDG_CONFIG_HOME/ssh/config"
+alias tmux="tmux -f $XDG_CONFIG_HOME/tmux.conf"
+
+
+# if [ -s "$XDG_CONFIG_HOME/ssh/config" ]
+# then
+#     SSH_CONFIG="-F $XDG_CONFIG_HOME/ssh/config"
+# fi
+# if [ -s "$XDG_CONFIG_HOME/ssh/id_rsa" ]
+# then
+#     SSH_ID="-i $XDG_CONFIG_HOME/ssh/id_rsa"
+# fi
+
+# alias ssh="ssh $SSH_CONFIG $SSH_ID "
+# alias ssh-copy-id="ssh-copy-id $SSH_ID"
+

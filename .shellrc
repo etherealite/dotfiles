@@ -1,0 +1,93 @@
+################
+# Common shell configuration compatable with both BASH and ZSH
+
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
+# ###########################################3
+# define all aliases
+alias ls='ls --color'
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+
+# common directory listings
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+# other aliases
+alias dkc="docker-compose"
+alias rsync-copy="rsync -avz --progress -h"
+alias rsync-move="rsync -avz --progress -h --remove-source-files"
+alias rsync-update="rsync -avzu --progress -h"
+alias rsync-synchronize="rsync -avzu --delete --progress -h"
+if command -v colordiff >/dev/null; then
+  alias diff="colordiff"
+fi
+
+
+# environment variables
+
+if [ -r $HOME/.xdgvars ]; then
+  . $HOME/.xdgvars
+fi
+
+if command -v vim &> /dev/null; then
+  export EDITOR=vim
+fi
+
+# Still needed for some reason, ipython object inspection requires it.
+export PAGER=less
+
+
+# turn off the bell
+setterm blength 0
+
+# add personal bin directory
+if [ -d ~/.local/bin ]; then
+  export PATH="$HOME/.local/bin:$PATH"
+fi
+
+
+### make stuff show colors ###
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# Try to make less show colors
+export LESS=-r 
+
+if [[ -s ~/.autojump/etc/profile.d/autojump.sh ]]; then 
+  source ~/.autojump/etc/profile.d/autojump.sh
+fi
+
+# python virtual_env setup for virtualenvwrapper.sh
+if [ -r "/etc/bash_completion.d/virtualenvwrapper" ]; then
+  source /etc/bash_completion.d/virtualenvwrapper
+  export WORKON_HOME=~/.virtualenvs
+fi
+
+# rbenv
+if [ -x  "$HOME/.rbenv/bin/rbenv" ] ; then
+  export PATH="$HOME/.rbenv/bin:$PATH"
+  eval "$(rbenv init -)"
+fi
+
+if [ command -v thefuck &> /dev/null ]; then
+  eval $(thefuck --alias)
+fi
+
+if [ command -v lesspipe &> /dev/null ]; then
+  eval $(/usr/bin/lesspipe)
+fi

@@ -1,0 +1,172 @@
+# Ansible playbook file
+
+### Deprecated probably forever see top of workstation.sh for details.
+
+# TODO: remove this file along with workstation.sh
+- hosts: all
+  strategy: debug
+  become: true
+  vars:
+    username: "{{ lookup('env', 'USERNAME') }}"
+    addgroups:
+      - adm
+      - cdrom
+      - sudo
+      - dip
+      - plugdev
+      - lxd
+      - lpadmin
+      - sambashare
+      - docker
+
+    admin_packages:
+      - build-essential
+      - aptitude
+      - tree
+      - htop
+    shell_packages:
+      - zsh
+      - jq
+      - silversearcher-ag
+      - autojump
+        # use this to trick programs into giving color output
+      - expect
+    development_packages:
+      - git
+      - vim
+      - mariadb-client
+      - lftp
+      - vagrant
+      - php-cli
+      - php-curl
+      - php-zip
+      - php-yaml
+      - php-xml
+
+
+  # These are run before any roles are executed
+  pre_tasks:
+    # allows running playbook locally by issuing `$ ansible-playbook play.yml`
+    - name: Add default inventory to ansible configuration
+      lineinfile:
+        dest: /etc/ansible/hosts
+        state: present
+        insertafter: EOF
+        line: localhost ansible_connection=local
+
+    - name: add apt keys
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+    - name: add PPA repos
+      apt_repository: repo="{{ item }}" state=present update_cache=yes
+      with_items:
+        # nginx official repository
+        - ppa:nginx/stable
+        # official ubuntu team repo of git backports
+        - ppa:git-core/ppa
+        # repo for more versions of php
+        - ppa:ondrej/php
+        # - yet another package manager
+        - ppa:flexiondotorg/yadm
+        - "deb https://download.docker.com/linux/{{ansible_distribution|lower}} {{ ansible_distribution_release }} stable"
+
+    - name: perform dist upgrade if available
+      apt:
+        upgrade: dist
+        state: latest
+        autoclean: yes
+        autoremove: yes
+        install_recommends: no
+    - name: ensure packages are installed
+      apt:
+        name: "{{ item }}"
+        state: latest
+        autoclean: yes
+        autoremove: yes
+        install_recommends: no
+      with_items: "{{  development_packages + shell_packages + admin_packages }}"
+    addgroups:
+
+
+
+  #roles always execute before tasks ( I think )
+  tasks:
+
+    - name: set home directory
+      set_fact: home=/home/{{ username }}
+
+    - name: set personal files directory
+      set_fact: home_bin="{{ home }}/.local/bin"
+
+    - name: add user to groups
+      user: 
+        append: yes
+        createhome: yes
+        group: evan
+        groups: "{{ addgroups }}"
+        home: "{{ home }}"
+        name: "{{ username }}"
+        shell: /bin/bash
+        state: present
+
+
+    - name: set vim plugin folder
+      set_fact: vimdot="{{ home }}/.vim"
+
+    - name: set vim autoload folder
+      set_fact: vimautoload="{{ vimdot }}/autoload"
+
+    - name: mkdir vim autoload directory
+      file:
+        path: "{{ vimautoload }}"
+        state: directory
+        recurse: yes
+      become_user: "{{ username }}"
+    - name: download vim-plug into autoload dir
+      get_url:
+        url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        dest: "{{ vimautoload }}"
+        force: yes
+      become_user: "{{ username }}"
+
+    - name: setting composer bin path
+      set_fact: composer_path="{{ home_bin }}"
+
+    - name: setting composer update cycle
+      set_fact: composer_update_day=30
+
+    - name: Installing composer
+      shell: >
+        curl -sS https://getcomposer.org/installer | php -- --install-dir={{ composer_path }} --filename=composer
+      args:
+        creates: "{{ composer_path }}/composer"
+      become_user: "{{ username }}"
+
+    - name: Get stat of composer file
+      stat:
+        path: "{{ composer_path }}/composer"
+      register: composer_stat
+
+    - name: Get date for composer update
+      shell: >
+        date --date='{{ composer_update_day }} days ago' +'%s'
+      register: composer_last_update
+      changed_when: False
+
+    - name: Update composer if necessary
+      shell: >
+        {{ composer_path }}/composer selfupdate
+      when: composer_last_update.stdout|int > composer_stat.stat.mtime|int
+      become_user: "{{ username }}"
+
+    - name: Check Docker compose bin file presence
+      stat: path=/usr/local/bin/docker-compose
+      register: dockercompose
+
+    - name: Install docker compose
+      shell: curl -L https://github.com/docker/compose/releases/download/1.14.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+
+    - name: Apply executable permission
+      file: path=/usr/local/bin/docker-compose mode="u+x,g+x,o+x"
+
+  #TODO: install https://github.com/tpope/vim-sensible

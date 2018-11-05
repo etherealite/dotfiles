@@ -1,0 +1,25 @@
+##### This file for the YADM dotfile manager configured in ~/.yadm.
+# Do NOT DELETE
+
+# Prevent YADM from commiting it's own git repo
+.yadm/repo.git
+
+# Don't track the yadm binary either, that could mess up
+# a restore at some point.
+.local/bin/yadm
+
+# Secret directories
+.gnupg
+.ssh
+
+# Directories with churn and temp files
+.cache/*
+!.cache/.gitkeep
+
+# Get mangled by OS and applications
+.profile
+.bashrc
+.bash_profile
+
+# annoying cruft goes here
+.sudo_as_admin_successful
