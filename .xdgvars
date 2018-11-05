@@ -44,6 +44,7 @@ export ACKRC="$XDG_CONFIG_HOME/ackrc"
 alias ncmpcpp="ncmpcpp -c $XDG_CONFIG_HOME/ncmpcpp/config"
 #alias scp="scp -F $XDG_CONFIG_HOME/ssh/config"
 alias tmux="tmux -f $XDG_CONFIG_HOME/tmux.conf"
+alias wget="wget --hsts-file XDG_CACHE_HOME/wget-hsts"
 
 # if [ -s "$XDG_CONFIG_HOME/ssh/config" ]
 # then
