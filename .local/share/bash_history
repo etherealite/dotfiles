@@ -1,9 +1,0 @@
-rm .bash_history 
-yadm status
-alias
-yadam add . -n
-yadm init
-yadam add -n .
-yadm 
-yadm add -n .
-exit

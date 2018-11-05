@@ -23,3 +23,8 @@
 
 # annoying cruft goes here
 .sudo_as_admin_successful
+
+# PHP Composer
+.config/composer
+.local/bin/composer
+.local/share/composer
