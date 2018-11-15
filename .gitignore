@@ -42,3 +42,6 @@ snap
 # Visual Studio Code
 .config/Code
 .var
+
+# VIM
+.config/vim/.netrwhist
