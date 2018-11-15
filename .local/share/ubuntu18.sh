@@ -31,7 +31,12 @@ php-cli
 php-curl
 php-zip
 php-yaml
-php-xml"
+php-xml
+php-json
+php-pdo
+php-readline
+php-mbstring
+unzip"
 
 ### Stuff to install manually
 # composer
