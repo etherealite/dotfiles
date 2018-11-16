@@ -41,6 +41,7 @@ export BYOBU_CONFIG_DIR="$XDG_DATA_CONFIG/byobu"
 export ACKRC="$XDG_CONFIG_HOME/ackrc"
 export HTTPIE_CONFIG_DIR="$XDG_CONFIG_HOME/httpie"
 export TLDR_CONFIG_DIR="$XDG_CONFIG_HOME/tldr"
+export _Z_DATA="$XDG_CACHE_HOME/z"
 # Alias respecting programs
 alias ncmpcpp="ncmpcpp -c $XDG_CONFIG_HOME/ncmpcpp/config"
 #alias scp="scp -F $XDG_CONFIG_HOME/ssh/config"
