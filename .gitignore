@@ -39,9 +39,26 @@ snap
 .local/bin/composer
 .local/share/composer
 
+# PHP syshell
+.config/psysh/psysh_history
+
 # Visual Studio Code
 .config/Code
 .var
 
 # VIM
 .config/vim/.netrwhist
+
+# HTOP
+.config/htop/htoprc
+
+# tldr community man pages
+.config/tldr/
+
+# python packages
+.local/bin/chardetect
+.local/bin/http
+.local/bin/http-prompt
+.local/bin/pygmentize
+.local/lib/python2.7/*
+.local/share/pip/log
